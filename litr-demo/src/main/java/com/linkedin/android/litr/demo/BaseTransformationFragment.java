@@ -7,6 +7,7 @@
  */
 package com.linkedin.android.litr.demo;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
@@ -29,6 +30,7 @@ import com.linkedin.android.litr.utils.TranscoderUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -66,6 +68,16 @@ public class BaseTransformationFragment extends Fragment {
 
         if (resultCode == RESULT_OK && data.getData() != null) {
             mediaPickerListener.onMediaPicked(data.getData());
+        }
+
+        else if (resultCode == RESULT_OK && data.getClipData()!=null){
+            List<Uri> uris=new ArrayList<>();
+            ClipData clipData=data.getClipData();
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                Uri url=clipData.getItemAt(i).getUri();
+                uris.add(url);
+            }
+            mediaPickerListener.onmMediaPicked(uris);
         }
     }
 
@@ -144,7 +156,7 @@ public class BaseTransformationFragment extends Fragment {
         intent.setType(type);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.pick_media)),
                                PICK_MEDIA);
     }

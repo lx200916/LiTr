@@ -88,6 +88,7 @@ public class TransformationPresenter {
                                                                                              transformationState.requestId,
                                                                                              transformationState,
                                                                                              targetMedia);
+        Log.i("TransformStats",String.format("Id: %s Source: %s Target: %s",transformationState.requestId,sourceMedia.uri,targetMedia.targetFile.getName()));
 
         try {
             int videoRotation = 0;

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -74,7 +75,7 @@ public class MediaTransformer {
      * @param context context with access to source and target URIs and other resources
      */
     public MediaTransformer(@NonNull Context context) {
-        this(context, Looper.getMainLooper(), Executors.newSingleThreadExecutor());
+        this(context, Looper.getMainLooper(), Executors.newFixedThreadPool(8));
     }
 
     /**
@@ -234,6 +235,7 @@ public class MediaTransformer {
         }
 
         int trackCount = trackTransforms.size();
+        Log.i(TAG,String.format("id %s TrackCount: %d",requestId,trackCount));
         for (int trackIndex = 0; trackIndex < trackCount; trackIndex++) {
             TrackTransform trackTransform = trackTransforms.get(trackIndex);
             if (trackTransform.getTargetFormat() == null

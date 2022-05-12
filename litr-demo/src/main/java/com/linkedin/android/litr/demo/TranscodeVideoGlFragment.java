@@ -26,12 +26,20 @@ import com.linkedin.android.litr.demo.databinding.FragmentTranscodeVideoGlBindin
 import com.linkedin.android.litr.utils.TransformationUtil;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TranscodeVideoGlFragment extends BaseTransformationFragment implements MediaPickerListener {
 
     private FragmentTranscodeVideoGlBinding binding;
 
     private MediaTransformer mediaTransformer;
+    private final List<SourceMedia> sourceMediaList=new ArrayList<>();
+    private final List<TargetMedia> targetMediaList=new ArrayList<>();
+    private final List<TransformationState> transformationStates=new ArrayList<>();
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +69,20 @@ public class TranscodeVideoGlFragment extends BaseTransformationFragment impleme
             }
         });
 
+        binding.buttonTranscode.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < sourceMediaList.size(); i++) {
+                    binding.getTransformationPresenter().startTransformation(sourceMediaList.get(i), targetMediaList.get(i), binding.getTrimConfig(),
+                            transformationStates.get(i)
+                            );
+
+
+                }           ;
+            }
+        });
+
         binding.setTransformationState(new TransformationState());
         binding.setTransformationPresenter(new TransformationPresenter(getContext(), mediaTransformer));
 
@@ -74,6 +96,28 @@ public class TranscodeVideoGlFragment extends BaseTransformationFragment impleme
         binding.setTrimConfig(new TrimConfig());
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onmMediaPicked(@NonNull List<Uri> uris) {
+        targetMediaList.clear();
+        sourceMediaList.clear();
+        transformationStates.clear();
+        for (Uri uri:
+             uris) {
+            SourceMedia sourceMedia=new SourceMedia();
+            updateSourceMedia(sourceMedia,uri);
+
+            sourceMediaList.add(sourceMedia);
+            File targetFile = new File(TransformationUtil.getTargetFileDirectory(requireContext().getApplicationContext()),
+                    "transcoded_" + TransformationUtil.getDisplayName(getContext(), sourceMedia.uri));
+            TargetMedia targetMedia=new TargetMedia();
+            targetMedia.targetFile=targetFile;
+            targetMedia.setTracks(sourceMedia.tracks);
+            targetMediaList.add(targetMedia);
+            transformationStates.add(new TransformationState());
+        }
+        onMediaPicked(uris.get(0));
     }
 
     @Override

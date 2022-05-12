@@ -102,6 +102,9 @@ class TransformationJob implements Runnable {
 
         marshallingTransformationListener.onStarted(jobId);
         lastProgress = 0;
+        Log.i("TransformStats","Request with id "+jobId+" Started");
+        long start  = System.currentTimeMillis();
+
 
         // process a frame from active track transcoder, until EoS (end of stream) is reached on each track
         do {
@@ -113,6 +116,10 @@ class TransformationJob implements Runnable {
                 break;
             }
         } while (!completed);
+        long end = System.currentTimeMillis();
+        Log.i("TransformStats",jobId+"last time is "+ (end - start));
+
+
 
         release(completed);
     }

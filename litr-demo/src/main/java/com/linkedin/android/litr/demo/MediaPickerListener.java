@@ -10,7 +10,12 @@ package com.linkedin.android.litr.demo;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 public interface MediaPickerListener {
 
     void onMediaPicked(@NonNull Uri uri);
+    default void onmMediaPicked(@NonNull List<Uri> uris){
+
+    }
 }
