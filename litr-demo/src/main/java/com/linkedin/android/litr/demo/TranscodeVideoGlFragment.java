@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.linkedin.android.litr.MediaTransformer;
 import com.linkedin.android.litr.demo.data.SourceMedia;
 import com.linkedin.android.litr.demo.data.TargetMedia;
+import com.linkedin.android.litr.demo.data.TargetTrack;
 import com.linkedin.android.litr.demo.data.TranscodingConfigPresenter;
 import com.linkedin.android.litr.demo.data.TransformationPresenter;
 import com.linkedin.android.litr.demo.data.TransformationState;
@@ -76,6 +77,10 @@ public class TranscodeVideoGlFragment extends BaseTransformationFragment impleme
                 for (int i = 0; i < sourceMediaList.size(); i++) {
                     TargetMedia  targetMedia=targetMediaList.get(i);
 //                    targetMedia.setTracks(binding.getTargetMedia().tracks.m);
+                    for (int j = 0; j <targetMedia.tracks.size() ; j++) {
+                        // Set Target Format to Config from UI
+                        targetMedia.tracks.get(j).format=binding.getTargetMedia().tracks.get(j).format;
+                    }
                     binding.getTransformationPresenter().startTransformation(sourceMediaList.get(i), targetMediaList.get(i), binding.getTrimConfig(),
                             transformationStates.get(i)
                             );

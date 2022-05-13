@@ -118,14 +118,14 @@ public class TransformationPresenter {
             MediaSource mediaSource = new MediaExtractorMediaSource(context, sourceMedia.uri, mediaRange);
 
             for (TargetTrack targetTrack : targetMedia.tracks) {
-                if (!targetTrack.shouldInclude) {
-                    continue;
-                }
+//                if (!targetTrack.shouldInclude) {
+//                    continue;
+//                }
                 TrackTransform.Builder trackTransformBuilder = new TrackTransform.Builder(mediaSource,
                                                                                           targetTrack.sourceTrackIndex,
                                                                                           mediaTarget)
                     .setTargetTrack(trackTransforms.size())
-                    .setTargetFormat(targetTrack.shouldTranscode ? createMediaFormat(targetTrack) : null)
+                    .setTargetFormat( createMediaFormat(targetTrack) )
                     .setEncoder(new MediaCodecEncoder())
                     .setDecoder(new MediaCodecDecoder());
                 if (targetTrack.format instanceof VideoTrackFormat) {
