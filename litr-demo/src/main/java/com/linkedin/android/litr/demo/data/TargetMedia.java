@@ -21,9 +21,9 @@ import java.util.List;
 
 public class TargetMedia extends BaseObservable {
 
-    public static final int DEFAULT_VIDEO_WIDTH = 1280;
-    public static final int DEFAULT_VIDEO_HEIGHT = 720;
-    public static final int DEFAULT_VIDEO_BITRATE = 5000000;
+    public static final int DEFAULT_VIDEO_WIDTH = 3840;
+    public static final int DEFAULT_VIDEO_HEIGHT = 2160;
+    public static final int DEFAULT_VIDEO_BITRATE = 20000000;
     public static final int DEFAULT_KEY_FRAME_INTERVAL = 5;
     public static final int DEFAULT_AUDIO_BITRATE = 128000;
 

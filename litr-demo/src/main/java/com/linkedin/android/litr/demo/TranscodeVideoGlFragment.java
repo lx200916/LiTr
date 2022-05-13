@@ -74,6 +74,8 @@ public class TranscodeVideoGlFragment extends BaseTransformationFragment impleme
             @Override
             public void onClick(View view) {
                 for (int i = 0; i < sourceMediaList.size(); i++) {
+                    TargetMedia  targetMedia=targetMediaList.get(i);
+//                    targetMedia.setTracks(binding.getTargetMedia().tracks.m);
                     binding.getTransformationPresenter().startTransformation(sourceMediaList.get(i), targetMediaList.get(i), binding.getTrimConfig(),
                             transformationStates.get(i)
                             );
