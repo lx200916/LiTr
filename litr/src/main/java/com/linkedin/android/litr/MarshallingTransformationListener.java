@@ -65,6 +65,8 @@ class MarshallingTransformationListener {
     void onCompleted(@NonNull String jobId,
                      @NonNull final List<TrackTransformationInfo> trackTransformationInfos) {
         futureMap.remove(jobId);
+        Log.i("TransformStats","Request with id "+jobId+" Stopped x "+System.currentTimeMillis());
+
 
         if (handler == null) {
             listener.onCompleted(jobId, trackTransformationInfos);

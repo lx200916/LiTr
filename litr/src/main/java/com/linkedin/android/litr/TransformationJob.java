@@ -102,7 +102,7 @@ class TransformationJob implements Runnable {
 
         marshallingTransformationListener.onStarted(jobId);
         lastProgress = 0;
-        Log.i("TransformStats","Request with id "+jobId+" Started");
+        Log.i("TransformStats","Request with id "+jobId+" Started ");
         long start  = System.currentTimeMillis();
 
 
@@ -118,6 +118,7 @@ class TransformationJob implements Runnable {
         } while (!completed);
         long end = System.currentTimeMillis();
         Log.i("TransformStats",jobId+"last time is "+ (end - start));
+        Log.i("TransformStats","Request with id "+jobId+" Stopped "+System.currentTimeMillis());
 
 
 
@@ -265,6 +266,7 @@ class TransformationJob implements Runnable {
 
         if (success) {
             marshallingTransformationListener.onCompleted(jobId, statsCollector.getStats());
+            Log.i("TransformStats",String.format("JobID:%s Stats:%s",jobId,statsCollector.getStats().get(0).getDuration()));
         }
     }
 
